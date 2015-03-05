@@ -58,7 +58,7 @@ Plot1 <- function() {
         ## subset to the dates we are interested in
         good <- with(powerData, Date >= as.Date("2007-02-01") & Date <= as.Date("2007-02-02"))
         powerData2 <- powerData[good,]
-        
+
         ## open png file with given width and height in pixels
         png(filename = "plot1.png", width = 480, height = 480,
             units = "px", pointsize = 12, bg = "white", res = NA,

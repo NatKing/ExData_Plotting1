@@ -73,12 +73,14 @@ Plot4 <- function() {
             units = "px", pointsize = 12, bg = "white", res = NA,
             restoreConsole = TRUE)
 
-        ## we need 2 columns of plots in 1 row
-        par(mfrow = c(1,2))
+        ## we need 2 columns of plots in 2 rows
+        par(mfrow = c(2,2))
         
         ## make 2 plots in 1 col, first active_power against time, and the second
         ## voltage against time;
         ## both are line plots
+        ## next make 2 more plots in the 2nd row, first Energy Sub Metering against datetime
+        ## and the second Global_Reactive_Power against datetime
         with (powerData2, {
                 plot(Time, Global_active_power, 
                      ylab="Global Active Power", xlab="", main="", pch=NA_integer_)
@@ -86,6 +88,32 @@ Plot4 <- function() {
                 plot(Time, Voltage, 
                      ylab="Voltage", xlab="datetime", main="", pch=NA_integer_)
                 lines(Time, Voltage)
+                ## open a plot without marking any points
+                plot(powerData2$Time, powerData2$Sub_metering_1, 
+                     ylab="Energy Sub Metering", xlab="", main="", pch=NA_integer_)
+                
+                ## set color to black for the first line chart with sub_metering_1
+                par(col="black")
+                lines(powerData2$Time, powerData2$Sub_metering_1)
+                
+                ## set color to red for the second line chart with sub_metering_2
+                par(col="red")
+                lines(powerData2$Time, powerData2$Sub_metering_2)
+                
+                ## set color to blue for the third line chart with sub_metering_3
+                par(col="blue")
+                lines(powerData2$Time, powerData2$Sub_metering_3)
+                par(col="black")
+                
+                ## draw the legend at the top-right part of the plot with in line style with width=1
+                legend("topright", legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), 
+                       col=c("black", "red", "blue"), lwd=1, lty=1 )
+
+                ## Global_reactive_power against datetime
+                plot(Time, Global_reactive_power, 
+                     ylab="Global_reactive_power", xlab="datetime", main="", pch=NA_integer_)
+                lines(Time, Global_reactive_power)
+                
         })
         dev.off()
 }
